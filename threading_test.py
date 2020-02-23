@@ -1,6 +1,7 @@
 import threading
 import multiprocessing
 import time
+import multiprocessing as mp
 
 class judge_video(threading.Thread):
     """docstring for judge_video"""
@@ -11,38 +12,50 @@ class judge_video(threading.Thread):
         self.result=0
 
     def run(self):
-        self.result = self.threading_test(self.arg)
+        self.result = threading_test(self.arg)
 
     def return_resutl(self):
 
         return self.result
 
-    def threading_test(self,arg):
 
-        print("this is the threading",str(arg))
-        y=arg
-        for z in range(1000):
-            y = y + z
-        print(y)
-        return y
+def threading_test(arg):
+
+    print("this is the threading",str(arg))
+    y=arg
+    for z in range(10000000):
+        y = y + z
+    print("current y is",y)
+    return y
 
 
 if __name__ == '__main__':
 
     start_time = time.time()
 
-    for x in range(2):
+    thread_list=[]
+    process_list=[]
+    for x in range(10):
 
-        z = judge_video(x)
+        p1 = mp.Process(target=threading_test, args=(x, ))
+        process_list.append(p1)
 
-        z.start()
+        t=threading.Thread(target=threading_test,args=(x,))
+        thread_list.append(t)
 
-        z.join()
+    # for m in thread_list:
+    #     m.setDaemon(True)
+    #     m.start()
+    #
+    # for n in thread_list:
+    #     n.join()
 
-        m = z.return_resutl()
+    for m1 in process_list:
+        m1.start()
 
-        print("current return m value is ",m)
-
+    for n1 in process_list:
+        n1.join()
+        # # t.join()
+        # threading_test(x)
     end_time = time.time()
-
     print("cost time is",end_time-start_time)
