@@ -1,0 +1,26 @@
+
+
+git pull --allow-unrelated-histories
+项目第一级目录 git
+
+ 
+
+本地与远程仓库，文件结构不一样，git防止误操作，报错
+
+一项此上命令，即可解决问题
+
+ 
+
+xxx
+
+git pull
+ 
+git pull origin master
+ 
+git pull origin master --allow-unrelated-histories
+ 
+
+Push rejected: Push to origin/master was rejected
+
+git pull origin master –allow-unrelated-histories 
+ 
